@@ -1,0 +1,53 @@
+{% extends "manager/index.html" %}
+
+{% block title %}
+    Consulta café
+{% endblock %}
+
+{% block body %}
+    <a href="{% url 'consulta' %}">CONSULTAR PARTICIPANTE</a><br><br>
+    <a href="{% url 'consulta_sala' %}">CONSULTAR POR SALA</a>
+    <hr>
+
+    <h3>Consultar participantes por espaços para café:</h3>
+    <div id=consulta_cafe>
+        <form action="{% url 'consulta_cafe' %}" method="post">
+            <select name=name>
+                {% for space in spaces %}
+                <option value="{{space.name}}">{{space.name}}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Consultar participantes">
+        </form>
+    </div>
+   
+    {% if message %}
+        <h2>ESPAÇO: "{{space_name}}"</h2>
+        {{message}}
+    {% endif %}
+
+    {% if attendees %}
+        <h2>ESPAÇO: "{{space_name}}"</h2>
+        Capacidade: {{capacity}}
+        <br>
+        Participantes alocados: {{occupancy}}
+        <br><br>
+        <div class=consulta>
+            <table>
+                <tr>
+                    <th>Nº</th>
+                    <th>NOME</th>
+                    <th>SOBRENOME</th>
+                </tr>
+            {% for attendee in attendees %}
+                <tr>
+                    <td>{{attendee.id}}</td>
+                    <td>{{attendee.name}}</td>
+                    <td>{{attendee.last_name}}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+    
+{% endblock %}

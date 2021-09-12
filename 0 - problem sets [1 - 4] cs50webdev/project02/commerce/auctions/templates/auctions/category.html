@@ -1,0 +1,41 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Categoriy: {{category}}</h2>
+    <hr>
+    
+    {% for listing in listings %}
+
+    <div class="d-flex justify-content-start">
+        <div class=lc-img>
+            <a href="{% url 'listing' listing.id %}"><img id=index-img src="{{listing.img_url}}" alt="Image for {{listing.title}}"></a>
+        </div>
+
+        <div class=lc-container>
+            <div class="lc-title">
+                <a href="{% url 'listing' listing.id %}">{{listing.title}}</a><br>
+            </div>
+            <div class="lc-price">
+                Price: ${{listing.price}}<br>
+            </div>
+            <div class="lc-description">
+                {{listing.description}}<br><br>
+            </div>
+            <div class="lc-details">
+                Created: {{listing.time}}<br>
+                By: {{listing.owner}}
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    {% endfor %}
+
+
+
+
+
+
+
+    
+{% endblock %}

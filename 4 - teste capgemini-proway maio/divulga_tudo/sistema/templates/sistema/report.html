@@ -1,0 +1,20 @@
+{% extends "sistema/layout.html" %}
+
+{% block body %}
+    <h1>RELATÓRIO</h1>
+    <h2>Anúncio: {{ad.name}}</h2>
+    <hr>
+
+    Período: <strong>{{start_date|date:"d/m/Y"}}</strong> a <strong>{{end_date|date:"d/m/Y"}}</strong>.
+    <br>
+    <br>
+    
+    Valor total investido: <strong>{{investment}}</strong>
+    <br>
+    Quantidade máxima de visualizações: <strong>{{max_views}}</strong>
+    <br>
+    Quantidade máxima de cliques: <strong>{{max_clicks}}</strong>
+    <br>
+    Quantidade máxima de compartilhamentos: <strong>{{max_shares}}</strong>
+    <br>
+{% endblock %}

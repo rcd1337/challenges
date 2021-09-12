@@ -1,0 +1,45 @@
+{% extends "sistema/layout.html" %}
+
+{% block body %}
+    <h1>CADASTRAR ANÚNCIO</h1>
+    <form action="{% url 'ad' %}" method="post">
+
+        <label for="name">Nome do anúncio:</label>
+        <br>
+        <input autofocus autocomplete="off" type="text" name="name" placeholder="">
+        <br>
+        <br>
+
+        <label for="client_id">Cliente:</label>
+        <br>
+        <select name="client_id">
+            {% for client in clients %}
+                <option value="{{client.id}}">{{client.name}}</option>
+            {% empty %}
+                <option disabled value="">Não há clientes cadastrados.</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+
+        <label for="start_date">Data de início:</label>
+        <br>
+        <input type="date" name="start_date" min="{% now 'Y-m-d' %}" placeholder="yyyy-mm-dd">
+        <br>
+        <br>
+
+        <label for="end_date">Data de término:</label>
+        <br>
+        <input type="date" name="end_date" min="{% now 'Y-m-d' %}" placeholder="yyyy-mm-dd">
+        <br>
+        <br>
+
+        <label for="investment">Investimento diário:</label>
+        <br>
+        <input type="number" min="0" step=".01" name="investment">
+        <br>
+        <br>
+        
+        <input type="submit" value="Cadastrar">
+    </form>
+{% endblock %}

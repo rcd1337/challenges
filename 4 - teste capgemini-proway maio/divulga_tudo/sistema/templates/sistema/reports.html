@@ -1,0 +1,48 @@
+{% extends "sistema/layout.html" %}
+
+{% block body %}
+    <h1>RELATÓRIOS</h1>
+
+    <form action="{% url 'reports' %}" method="post">
+        <label for="client_id">Selecione o cliente:</label>
+        <br>
+        <select name="client_id">
+            {% for client in clients %}
+                <option value="{{client.id}}">{{client.name}}</option>
+            {% empty %}
+                <option disabled value="">Não há clientes cadastrados.</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Visualizar anúncios">
+    </form>
+    <br>
+    
+    {% if ads %}
+        <h2>Anúncios de: {{client.name}}</h2>
+        <hr>
+        {% for ad in ads %}
+        <form action="{% url 'report' %}" method="post">
+            <h3>{{ad.name}}</h3>
+
+            <input type="hidden" name="ad_id" value="{{ad.id}}">
+            
+            <label for="start_date">Data de início:</label>
+            <input type="date" min="{{ad.start_date|date:'Y-m-d'}}" max="{{ad.end_date|date:'Y-m-d'}}" name="start_date" placeholder="yyyy-mm-dd" value="{{ad.start_date|date:'Y-m-d'}}">
+            
+            <label for="end_date">Data de término:</label>
+            <input type="date" min="{{ad.start_date|date:'Y-m-d'}}" max="{{ad.end_date|date:'Y-m-d'}}" name="end_date" placeholder="yyyy-mm-dd" value="{{ad.end_date|date:'Y-m-d'}}">
+            <br>
+            <br>
+
+            <input type="submit" value="Gerar relatório">
+            <br>
+        </form>
+        <hr>
+        {% endfor %}
+    {% endif %}
+
+    {% if empty %}
+        Cliente "{{client.name}}" não possui anúncios cadastrados.
+    {% endif %}
+    
+{% endblock %}

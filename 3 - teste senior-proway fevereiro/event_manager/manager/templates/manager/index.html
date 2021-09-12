@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .nav_index {
+                font-size: 24px;
+            }
+            table, td, th {
+                border: 1px solid black;
+                text-align: left;
+                border-collapse: collapse;
+                padding: 3px;
+            }
+            select {
+                width: 169px;
+            }
+        </style>
+        <title>{% block title%}{% endblock %}</title>
+        <div class="nav_index">
+                <a href="{% url 'cadastro' %}">CADASTRAR</a> | 
+                <a href="{% url 'consulta' %}">CONSULTAR</a>
+        </div>
+        <hr>
+    </head>
+    <body>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>

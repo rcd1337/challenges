@@ -1,0 +1,7 @@
+Current operation gross income: 
+<strong><%= number_to_currency(@subtotal, unit: "R$", separator: ",", delimiter: ".", format: "%u %n") %></strong>
+<br>
+All-time operations gross income: 
+<strong><%= number_to_currency(@total, unit: "R$", separator: ",", delimiter: ".", format: "%u %n") %></strong>
+<br>
+<%= link_to 'Back', root_path %>

@@ -1,0 +1,51 @@
+{% extends "manager/layout.html" %}
+
+{% block body %}
+    <h1>CADASTRAR OPERAÇÃO</h1>
+
+    <form action="{% url 'add_operation' %}" method="post">
+        
+        <label for="client_name">Nome do cliente:</label>
+        <br>
+        {% if clients %}
+            <input autocomplete="off" list="clients" name="client_name">
+            <datalist id="clients">
+                {% for client in clients %}
+                    <option value="{{client.name}}">
+                {% endfor %}
+            </datalist>
+        {% else %}
+            <input type="text" value="Não há clientes cadastrados." disabled>
+        {% endif %}
+        <br>
+        <br>
+
+        <label for="source_currency_id">Moeda origem:</label>
+        <br>
+        <select name="source_currency_id">
+            {% for currency in currencies %}
+            <option value="{{currency.id}}">{{currency.code}} - {{currency.name}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+
+        <label for="target_currency_id">Moeda destino:</label>
+        <br>
+        <select name="target_currency_id">
+            {% for currency in currencies %}
+            <option value="{{currency.id}}">{{currency.code}} - {{currency.name}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        
+        <label for="amount">Valor:</label>
+        <br>
+        <input type="number" min="0" step=".01" name="amount" autocomplete="off">
+        <br>
+        <br>
+
+        <input type="submit" value="Cadastrar">
+    </form>
+{% endblock %}

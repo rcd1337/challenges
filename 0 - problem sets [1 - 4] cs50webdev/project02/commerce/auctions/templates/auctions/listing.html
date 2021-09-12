@@ -1,0 +1,134 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    
+{% if listing.closed == True %}
+    <h3>Auction closed.</h3>
+    <h6>Winner: {{winner}}</h6>
+    <hr>
+{% endif %}
+
+    <div class=l-content>
+        <div class=l-title>
+            {{listing.title}}<br>
+        </div>
+    {% if user.is_authenticated %}
+        <div class=l-watchlist>
+            <form action="{% url 'watchlist' %}" method="post"> 
+                {% csrf_token %}
+                
+                <input type="hidden" value={{listing.id}} name="listing_id">
+                <input class="btn btn-primary btn-sm" type="submit" value="Watchlist">
+                    {% if watchlist_message %}
+                        <span style="font-style: italic;">{{watchlist_message}}</span>
+                    {% endif %}
+            </form>
+        </div><br>
+    {% endif %}
+        <div class=l-img>
+            <img id=l-img src="{{listing.img_url}}" alt="Listing Image"><br>
+        </div>
+        
+        <div class=l-description>
+            {{listing.description}}<br><br>
+        </div>
+        
+        <div class=l-price>
+            ${{listing.price}}<br>
+        </div>
+
+    {% if listing.closed == False %}
+        <div class=l-biddetails>
+            {{bids}} bid(s) so far. 
+            {% if not user.is_authenticated %}
+                <div class=box></div>
+            {% endif %}
+            {% if lastbidder != None %}
+                Your bid is the current bid.
+            {% endif %}
+        </div>
+        {% if user.is_authenticated %}
+        <form action="{% url 'listing' listing.id %}" method="post"> 
+            {% csrf_token %}
+        
+            <label for="bid"></label>
+            <input class="form-control l-input" type="number" name="bid" step=0.01 placeholder="Bid"><br>
+            <input class="btn btn-primary" type="submit" value="PLACE BID">
+            
+            {% if alert_message %}
+            <br><br>
+                {% for message in alert_message %}
+                    <span style="color: rgb(220, 0, 0);" >{{message}}</span>
+                {% endfor %}
+            {% endif %}
+        </form><br>
+        {% endif %}
+    {% else %}
+        <br>
+    {% endif %}
+
+        <div class=l-details1>
+            Details
+        </div>
+        <div class=l-details2>
+            <ul>
+                <li class=l-details2>Category: <a href="/category/{{listing.category}}">{{listing.category}}</a></li>
+                <li class=l-details2>Listed by: <span style="font-weight: bold;" >{{listing.owner}}</span></li>
+            </ul>    
+                {% if user.username == listing.owner %}
+                    <form action="{% url 'close_listing' %}" method="post"> 
+                        {% csrf_token %}
+                        You're the owner of this listing.
+                        <input type="hidden" value={{listing.id}} name="listing_id">
+                        {% if listing.closed == False %}
+                            <input class="btn btn-link btn-sm teste" type="submit" value="Close listing.">
+                        {% endif %}
+                    </form>
+                {% endif %}
+        </div>
+    </div>
+    
+    <hr style="margin-top: -1px;">
+    
+    <div class=make-comment>
+        <div style="font-size: 18px; font-weight: 600;">
+            COMMENTS:<br>
+        </div>
+    {% if user.is_authenticated %}
+        <form action="{% url 'submit_comment' %}" method="post"> 
+            
+            {% csrf_token %}
+            
+            <input type="hidden" value="{{listing.id}}" name="listing_id">
+            <textarea class="form-control l-comment" name="comment" rows="9" cols="69"></textarea><br>
+            <input  class="btn btn-secondary btn-sm" type="submit" value="Submit Comment">
+            
+            {% if comment_message %}
+                {{comment_message}}
+            {% endif %}
+
+        </form>
+    {% endif %}
+    </div>
+    
+    <div style="width: 504px;">
+    <hr>
+            {% if comments %}
+            {% for comment in comments %}
+            <div style="width: 504px;" class="card">    
+                <div style="padding: 5px;" class="card-header comments1">
+                    <div class="comment1">
+                        {{comment.username}} commented:
+                        <span style="font-size: 12px; font-weight: 600; align-self: center; color: rgb(146, 146, 146);">{{comment.time}}</span>
+                    </div>
+                </div>
+                <div style="padding: 5px;" class="card-body comments1">
+                    <p class="card-text">{{comment.comment}}</p>
+                </div>
+            </div>
+            <p></p>
+            {% endfor %}
+        {% endif %}
+    </div>
+    
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends "manager/layout.html" %}
+{% load multiply %}
+{% load humanize %}
+
+{% block body %}
+    <h1>RELATÓRIOS</h1>
+
+    <form action="{% url 'reports' %}" method="post">
+        {% if clients %}
+            <label for="client_id">Selecione o cliente:</label>
+            <br>
+        
+            <input autocomplete="off" list="clients" name="client_name">
+            <datalist id="clients">
+                {% for client in clients %}
+                    <option value="{{client.name}}">
+                {% endfor %}
+            </datalist>
+            <br>
+            <br>
+
+            Selecione o período:
+            <br>
+            <label for="start_date">De:</label>
+            <input type="date" min="{{first.created_on|date:'Y-m-d'}}" max="{{last.created_on|date:'Y-m-d'}}" 
+            name="start_date" placeholder="yyyy-mm-dd" value="{{first.created_on|date:'Y-m-d'}}">
+
+            <label for="end_date">Até:</label>
+            <input type="date" min="{{first.created_on|date:'Y-m-d'}}" max="{{last.created_on|date:'Y-m-d'}}" 
+            name="end_date" placeholder="yyyy-mm-dd" value="{{last.created_on|date:'Y-m-d'}}">
+            <br>
+            <br>
+
+            <input type="submit" value="Gerar relatório">
+            
+        {% else %}
+            Não há clientes cadastrados.
+        {% endif %}
+    </form>
+    
+    <br>
+    
+    {% if operations %}
+        <hr>
+
+        <h2>Relatório de Operações (Gerado em {% now 'd/m/Y - H:i' %})</h2>
+
+        <table>
+            <tr>
+                {% if client %}
+                <td>Cliente: <strong>{{client}}</strong></td>
+                {% else %}
+                <td><strong>TODAS AS OPERAÇÕES</strong></td>
+                {% endif %}
+            </tr>
+            <td></td>
+            <tr>
+                <td>Período: <strong>{{start_date|date:'d/m/Y'}}</strong> a <strong>{{end_date|date:'d/m/Y'}}</strong>.</td>
+            </tr>
+        </table>
+
+        <br>
+        
+        <strong><table>
+            <tr>
+                <td>TOTAL CONVERSÕES EFETUADAS NO PERÍODO:</td>
+                <td>R$ {{total_conversions|floatformat:"2"|intcomma}}</td>
+            </tr>
+            <tr>
+                <td>TOTAL TAXAS COBRADAS NO PERÍODO:</td>
+                <td>R$ {{total_fees|floatformat:"2"|intcomma}}</td>
+            </tr>
+            <tr>
+                <td>TOTAL OPERAÇÕES NO PERÍODO (convertido - taxa):</td>
+                <td>R$ {{total_operations|floatformat:"2"|intcomma}}</td>
+            </tr>
+        </table></strong>
+
+        <hr>
+        <h2>Operações realizadas:</h2>
+        <hr>
+
+        {% for operation in operations %}
+            <h3>{{operation.created_on|date:'d/m/Y - H:i'}}</h3>
+
+            {% if not client %} 
+                <table>
+                    <tr>
+                        <td>Cliente: <strong>{{operation.client.name}}</strong></td>
+                    </tr>
+                </table>
+                <br>
+            {% endif %}
+            
+            <table>
+                <tr>
+                    <td>Moeda origem: <strong>{{operation.source_currency.code}}</strong> - <strong>{{operation.source_currency.name}}</strong></td>
+                </tr>
+                <tr>
+                    <td>Valor: <strong>{{operation.source_currency.symbol}}</strong> <strong>{{operation.source_amount|floatformat:"2"|intcomma}}</strong></td>
+                </tr>
+            </table>
+
+            <br>
+
+            <table>
+                <tr>
+                    <td>Moeda destino: <strong>{{operation.target_currency.code}}</strong> - <strong>{{operation.target_currency.name}}</strong></td>
+                </tr>
+                <tr>
+                    <td>Valor convertido: <strong>{{operation.target_currency.symbol}}</strong> <strong>{{operation.converted_amount|multiply:operation.target_currency.indexed_value|floatformat:"2"|intcomma}}</strong></td>
+                </tr>
+                <tr>
+                    <td>Taxa: <strong>{{operation.target_currency.symbol}}</strong> <strong>{{operation.fee_amount|multiply:operation.target_currency.indexed_value|floatformat:"2"|intcomma}}</strong></td>
+                </tr>
+                <tr>
+                    <td>Total da operação (convertido - taxa): <strong>{{operation.target_currency.symbol}}</strong> <strong>{{operation.total|multiply:operation.target_currency.indexed_value|floatformat:"2"|intcomma}}</strong></td>
+                </tr>
+            </table>
+
+            <hr>
+        {% endfor %}
+    {% endif %}
+
+    {% if empty %}
+        <hr>
+        Não foram encontradas operações correspondentes a esta busca.
+    {% endif %}
+    
+{% endblock %}

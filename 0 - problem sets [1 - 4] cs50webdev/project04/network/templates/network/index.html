@@ -1,0 +1,86 @@
+{% extends "network/layout.html" %}
+{% load static %}
+{% block script %}
+    <script src="{% static 'network/javascript.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+    <br>
+        <div id="new_post" class="new_post container">
+            <div class="new_post">
+                <form action="{% url 'index' %}" method="post">
+                    <div>
+                        <label for="new_post">New Post</label><br>
+                        <textarea class="txt_container" name="new_post" rows="6" cols="69"></textarea><br>
+                        <input type="hidden" name="username" value="{{user.username}}">
+                    </div>
+                    <div>
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    <hr>
+    {% endif %}
+
+    {% if not user.is_authenticated %}
+        <br>
+    {% endif %}
+    <h2 class="container" style="margin-bottom: 0px;">All Posts</h2><br>
+    
+    <div id="all_posts" class="all_posts container">
+        {% for post in page_obj %}
+            <div id="post_{{post.id}}" class="post_container">
+                <div class="post_content">
+                    <div class="post_header">
+                        <div class="username">
+                            <a href="{% url 'profile' post.username %}" ><strong>{{ post.username }}</strong></a>
+                        </div>
+                        <div>
+                            {% if post.username.username == user.username %}
+                                <input type="button" class="edit-btn_{{post.id}}" id="{{post.id}}" onclick="edit(this.id)" value="Edit">
+                            {% endif %}
+                        </div>
+                    </div><br>
+                    
+                    <div class="postcontent">
+                        <span id="content_{{post.id}}">{{post.content}}</span>
+                    </div><br>
+
+                    <div class="posttimestamp">
+                        {{post.timestamp}}
+                    </div>
+                </div>
+                <div class="post_skirting">
+                    <div class="likes-received_{{post.id}}">
+                    <input type="button" class="like-btn_{{post.id}}" id="{{post.id}}" onclick="like(this.id)" value="♡">
+                        <span class="likes posttimestamp" id="{{post.id}}">{{post.likes}}</span> <span class="posttimestamp">Likes</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <br>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+    <hr>
+{% endblock %}
+

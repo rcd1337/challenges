@@ -1,0 +1,46 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Create Listing</h2>
+    <hr>
+
+    {% if alert_message %}
+        <br>
+        <div class="alert">
+        {% for message in alert_message %}
+            <li>{{message}}</li>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+    <form action="{% url 'create_listing' %}" method="post"> 
+        {% csrf_token %}
+        <div id="cl-forms1">
+            <br>
+            <label class="l-details1 cl-margin" for="title">Title:</label><br>
+            <input class="form-control cl-input-size" type="text" name="title"><br><br>
+
+            <label class="l-details1 cl-margin" for="description">Decription:</label><br>
+            <textarea class="form-control cl-input-size" name="description" rows="9" cols="69"></textarea><br><br>
+
+            <label class="l-details1 cl-margin" for="price">Starting Bid:</label><br>
+            <input class="form-control cl-input-size" type="number" name="price" step=0.01 placeholder="$"><br><br>
+
+            <label class="l-details1 cl-margin" for="category">Category:</label><br>
+            <select class="form-control cl-input-size" name="category">
+                <option value=""></option>
+                {% for category in categories %}
+                <option value="{{category}}"">{{category}}</option>
+                {% endfor %}
+            </select><br><br>
+
+            <label class="l-details1 cl-margin" for="img_url">Image URL (optional):</label><br>
+            <input class="form-control cl-input-size" type="text" name="img_url" placeholder="https://example.com/image.jpg"><br>
+                        
+            <input class="btn btn-primary" style="margin-bottom: 20px;" type="submit" value="Create Listing">
+        </div>
+    </form>
+
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "manager/index.html" %}
+
+{% block title %}
+    Consulta participantes
+{% endblock %}
+
+{% block body %}
+    <a href="{% url 'consulta_sala' %}">CONSULTAR POR SALA</a><br><br>
+    <a href="{% url 'consulta_cafe' %}">CONSULTAR POR ESPAÇO</a>
+    <hr>
+
+    {% if message %}
+        <div class="alert-message">
+            <br>
+            {{message}}
+            <br><br>
+        </div>
+    {% endif %}
+
+    <h3>Consulta de participante:</h3>
+    <div id=consulta>
+        <form action="{% url 'consulta' %}" method="post">
+            <input type="text" name="name" placeholder="Nome">
+            
+            <input type="text" name="last_name" placeholder="Sobrenome">
+
+            <input type="submit" value="Consultar">
+        </form>
+    </div>
+        
+    {% if attendees %}
+    <br><br>
+    <div class=consulta>
+        <table>
+            <tr>
+                <th>Nº</th>
+                <th>NOME</th>
+                <th>SOBRENOME</th>
+                <th>ESPAÇO DO CAFÉ</th>
+                <th>SALA - ETAPA 1</th>
+                <th>SALA - ETAPA 2</th>
+            </tr>
+        {% for attendee in attendees %}
+            <tr>
+                <td>{{attendee.id}}</td>
+                <td>{{attendee.name}}</td>
+                <td>{{attendee.last_name}}</td>
+                <td>{{attendee.coffee_space.name}}</td>
+                <td>{{attendee.event_room_1.name}}</td>
+                <td>{{attendee.event_room_2.name}}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+
+{% endblock %}

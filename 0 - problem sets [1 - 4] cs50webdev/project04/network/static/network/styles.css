@@ -1,0 +1,46 @@
+.post_container {
+    border: 1px solid black;
+    margin: 2px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.post_header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile_name {
+    font-size: 36px;
+}
+
+.txt_container {
+    width: 99%;
+    max-width: 800px;
+}
+
+.container {
+    width: 99%;
+    padding-right: 25px;
+    padding-left: 25px;
+    max-width: 800px;
+}
+
+.username {
+    font-size: 20px;
+}
+
+.postcontent {
+    overflow-wrap: break-word;
+}
+
+.posttimestamp {
+    font-size: 14px;
+    color:dimgray
+}
+
+.pagination {
+    display: flexbox;
+    justify-content: center;
+    padding: 10px;
+}

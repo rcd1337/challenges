@@ -1,0 +1,34 @@
+{% extends "manager/index.html" %}
+
+{% block title %}
+    Cadastro sala
+{% endblock %}
+
+{% block body %}
+    <a href="{% url 'cadastro' %}">CADASTRAR PARTICIPANTE</a><br><br>
+    <a href="{% url 'cadastro_cafe' %}">CADASTRAR ESPAÇO PARA CAFÉ</a>
+    <hr>
+
+    {% if rooms %}
+        <h3>Sala(s) já cadastrada(s).</h3>
+        <br>
+        <div id=salas>
+            {% for room in rooms %}
+                {{room}}<br>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h3>Cadastro de sala(s) para evento:</h3>
+        <div id=cadastro_sala>
+            <form action="{% url 'cadastro_sala' %}" method="post">
+                {% for number in number_list %}
+                    <input type="text" name="name{{number}}" placeholder="Nome">
+                    <input type="number" name="capacity{{number}}" placeholder="Lotação máxima">
+                    <br><br>
+                {% endfor %}
+                <input type="hidden" name="quantity" value="{{quantity}}">
+                <input type="submit" value="Cadastrar">
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

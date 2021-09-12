@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2>
+    <hr>
+    
+    {% for listing in watchlist %}
+
+    <div class="d-flex justify-content-start">
+        <div class=lc-img>
+            <a href="{% url 'listing' listing.listing_id.id %}"><img id=index-img src="{{listing.listing_id.img_url}}" alt="Image for {{listing.listing_id.title}}"></a>
+        </div>
+
+        <div class=lc-container>
+            <div class="lc-title">
+                <a href="{% url 'listing' listing.listing_id.id %}">{{listing.listing_id.title}}</a><br>
+            </div>
+            <div class="lc-price">
+                Price: ${{listing.listing_id.price}}<br>
+            </div>
+            <div class="lc-description">
+                {{listing.listing_id.description}}<br><br>
+            </div>
+            <div class="lc-details">
+                Created: {{listing.listing_id.time}}<br>
+                By: {{listing.listing_id.owner}}
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    {% endfor %}
+    {% endblock %}

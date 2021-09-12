@@ -1,0 +1,73 @@
+{% extends "manager/index.html" %}
+
+{% block title %}
+    Consulta sala
+{% endblock %}
+
+{% block body %}
+    <a href="{% url 'consulta' %}">CONSULTAR PARTICIPANTE</a><br><br>
+    <a href="{% url 'consulta_cafe' %}">CONSULTAR POR ESPAÇO</a>
+    <hr>
+    
+    <h3>Consultar participantes por sala de evento:</h3>
+    <div id=consulta_sala>
+        <form action="{% url 'consulta_sala' %}" method="post">
+            <select name=name>
+                {% for room in rooms %}
+                <option value="{{room.name}}">{{room.name}}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Consultar participantes">
+        </form>
+    </div>  
+    
+    {% if message %}
+        <h2>SALA: "{{room_name}}"</h2>
+        {{message}}
+    {% endif %}
+
+    {% if attendees_1 or attendees_2 %}
+        <div class=consulta>
+            <h2>SALA: "{{room_name}}"</h2>
+            {% if attendees_1 %}
+                <h3>Etapa 1 - ({{occupancy_1}}/{{capacity}})</h3>
+                <div id="etapa_1">
+                    <table>
+                        <tr>
+                            <th>Nº</th>
+                            <th>NOME</th>
+                            <th>SOBRENOME</th>
+                        </tr>
+                    {% for attendee in attendees_1 %}
+                        <tr>
+                            <td>{{attendee.id}}</td>
+                            <td>{{attendee.name}}</td>
+                            <td>{{attendee.last_name}}</td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </div>
+            {% endif %}
+            {% if attendees_2 %}
+                <h3>Etapa 2 - ({{occupancy_2}}/{{capacity}})</h3>
+                <div id="etapa_2">
+                    <table>
+                        <tr>
+                            <th>Nº</th>
+                            <th>NOME</th>
+                            <th>SOBRENOME</th>
+                        </tr>
+                    {% for attendee in attendees_2 %}
+                        <tr>
+                            <td>{{attendee.id}}</td>
+                            <td>{{attendee.name}}</td>
+                            <td>{{attendee.last_name}}</td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+{% endblock %}

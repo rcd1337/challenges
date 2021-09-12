@@ -1,0 +1,112 @@
+[
+    {
+        "model": "manager.Currency",
+        "pk": 1,
+        "fields": {
+            "name": "Dólar dos Estados Unidos",
+            "code": "USD",
+            "symbol": "$",
+            "indexed_value": 1.00
+        }
+    },
+    {
+        "model": "manager.Currency",
+        "pk": 2,
+        "fields": {
+            "name": "Dólar australiano",
+            "code": "AUD",
+            "symbol": "$",
+            "indexed_value": 1.29
+        }
+    },
+    {
+        "model": "manager.Currency",
+        "pk": 3,
+        "fields": {
+            "name": "Real brasileiro",
+            "code": "BRL",
+            "symbol": "R$",
+            "indexed_value": 5.37
+        }
+    },
+    {
+        "model": "manager.Currency",
+        "pk": 4,
+        "fields": {
+            "name": "Dólar canadense",
+            "code": "CAD",
+            "symbol": "$",
+            "indexed_value": 1.21
+        }
+    },
+    {
+        "model": "manager.Currency",
+        "pk": 5,
+        "fields": {
+            "name": "Franco suíço",
+            "code": "CHF",
+            "symbol": "Fr",
+            "indexed_value": 0.90
+        }
+    },
+    {
+        "model": "manager.Currency",
+        "pk": 6,
+        "fields": {
+            "name": "Yuan chinês",
+            "code": "CNY",
+            "symbol": "¥",
+            "indexed_value": 6.43
+        }
+    },
+    {
+        "model": "manager.Currency",
+        "pk": 7,
+        "fields": {
+            "name": "Euro",
+            "code": "EUR",
+            "symbol": "€",
+            "indexed_value": 0.83
+        }
+    },
+    {
+        "model": "manager.Currency",
+        "pk": 8,
+        "fields": {
+            "name": "Libra esterlina",
+            "code": "GBP",
+            "symbol": "£",
+            "indexed_value": 0.71
+        }
+    },
+    {
+        "model": "manager.Currency",
+        "pk": 9,
+        "fields": {
+            "name": "Dólar de Hong Kong",
+            "code": "HKD",
+            "symbol": "$",
+            "indexed_value": 7.76
+        }
+    },
+    {
+        "model": "manager.Currency",
+        "pk": 10,
+        "fields": {
+            "name": "Iene japonês",
+            "code": "JPY",
+            "symbol": "¥",
+            "indexed_value": 108.93
+        }
+    },
+    {
+        "model": "manager.Currency",
+        "pk": 11,
+        "fields": {
+            "name": "Dólar da Nova Zelândia",
+            "code": "NZD",
+            "symbol": "$",
+            "indexed_value": 1.39
+        }
+    }
+]

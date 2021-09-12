@@ -1,0 +1,4 @@
+django==3.1.5
+gunicorn
+djangorestframework==3.12.2
+psycopg2==2.8.6

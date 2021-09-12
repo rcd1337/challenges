@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Divulga Tudo</title>
+        <link rel="shortcut icon" href="#">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <nav style="font-size: larger;">
+            <a href="{% url 'ad' %}">Cadastrar Anúncio</a> |
+            <a href="{% url 'client' %}">Cadastrar Cliente</a> |
+            <a href="{% url 'reports' %}">Relatórios</a>
+        </nav>
+        <br>
+        <div class="message_alert">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                        <div class="alert positive">
+                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                        <div class="alert negative">
+                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>
